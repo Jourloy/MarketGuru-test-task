@@ -8,10 +8,22 @@ import {User} from "src/user/entities/user.entity";
 export class AuthService {
 	constructor(private userService: UserService) {}
 
-	async register(userDTO: UserDto) {
+	/**
+	 * Registers a user.
+	 *
+	 * @param {UserDto} userDTO - The user data to register.
+	 * @return {Promise<any>} A promise that resolves to the created user.
+	 */
+	async register(userDTO: UserDto): Promise<{errorMessage?: string; user?: User}> {
 		return this.userService.create(userDTO);
 	}
 
+	/**
+	 * Logs in a user with the provided userDTO.
+	 *
+	 * @param {UserDto} userDTO - The userDTO containing the user's email and password.
+	 * @return {Promise<{errorMessage?: string; user?: User}>} - A promise that resolves to an object containing an error message if login fails, or the user object if login is successful.
+	 */
 	async login(userDTO: UserDto): Promise<{errorMessage?: string; user?: User}> {
 		const user = await this.userService.findOne(userDTO.email, userDTO.phone);
 

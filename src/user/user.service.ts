@@ -17,7 +17,7 @@ export class UserService {
 	 * @param {CreateUserDto} createUserDto - The data of the user to be created.
 	 * @return {Promise<{errorMessage: string} | {user: User}>} - Returns an object with an error message if the user already exists or with the created user.
 	 */
-	public async create(createUserDto: CreateUserDto): Promise<{errorMessage?: string, user?: User}> {
+	public async create(createUserDto: CreateUserDto): Promise<{errorMessage?: string; user?: User}> {
 		if (!createUserDto.email && !createUserDto.phone) {
 			return {errorMessage: `Email or phone is required`};
 		}
@@ -54,6 +54,13 @@ export class UserService {
 		return users;
 	}
 
+	/**
+	 * Finds a user based on the provided email or phone number.
+	 *
+	 * @param {string} email - The email of the user (optional).
+	 * @param {string} phone - The phone number of the user (optional).
+	 * @return {Promise<User>} A promise that resolves to the found user.
+	 */
 	public async findOne(email?: string, phone?: string): Promise<User> {
 		const whereQuery = {};
 		if (email) whereQuery[`email`] = email;

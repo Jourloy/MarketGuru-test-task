@@ -27,4 +27,13 @@ export class AuthController {
 		const state = await this.authService.login(userDto);
 		res.status(state.errorMessage ? 400 : 200).json(state);
 	}
+
+	/*
+	 * How to improve:
+	 *
+	 * 1. Add jwt token
+	 * 2. Add session
+	 * 3. Add refresh token
+	 * 4. Add logout
+	 */
 }
