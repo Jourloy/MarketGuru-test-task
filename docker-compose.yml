@@ -1,0 +1,33 @@
+version: '3.8'
+
+name: marketguru-test
+services:
+    app:
+        container_name: marketguru-test-backend
+        build:
+            context: .
+            dockerfile: Dockerfile
+        volumes:
+            - .:/app
+            - /app/node_modules
+        command: yarn dev
+        env_file:
+            - .env
+        ports:
+            - "${PORT}:3000"
+        restart: always
+        depends_on:
+            - postgres
+
+    postgres:
+        container_name: marketguru-test-postgres
+        image: postgres:latest
+        environment:
+            POSTGRES_DB: "${POSTGRES_DB}"
+            POSTGRES_USER: "${POSTGRES_USER}"
+            POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+        ports:
+            - "5432:5432"
+
+volumes:
+    app:
